@@ -17,10 +17,30 @@ const membership = document.querySelector('input[name="tipo"]:checked');
 // Event Listeners
 form.addEventListener('submit', handleForm);
 
+// Functions
 function handleForm (e) {
 	e.preventDefault();
-	console.log(brand.value)
-	console.log(years.value)
-	console.log(membership.value)
+	const interface = new Interface();
+	console.log(interface)
+	if (brand.value === "" || years.value === "" || membership.value === "") {
+		interface.showError('!Debes Completar Todos los Campos!');
+	}
+	else {
+		console.log('datos correctos')
+	}
+	
 }
 
+function Interface () {
+
+}
+// We add showError like a prototype
+Interface.prototype.showError = function (message) {
+	const div = document.createElement('div');
+	div.classList.add('mensaje', 'error');
+	div.innerHTML = message;
+	form.insertBefore(div, document.querySelector('.form-group'))
+	setTimeout(function() {
+		document.querySelector('.mensaje').remove()
+	}, 2000 )
+}
