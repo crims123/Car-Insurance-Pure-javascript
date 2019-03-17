@@ -12,7 +12,7 @@ for (i=maxYear; i >= minYear; i--) {
 // Variables
 const form = document.querySelector('#cotizar-seguro');
 const brand = document.querySelector('#marca');
-const membership = document.querySelector('input[name="tipo"]:checked');
+let membership = document.querySelector('input[name="tipo"]:checked').value;
 
 // Event Listeners
 form.addEventListener('submit', handleForm);
@@ -21,12 +21,15 @@ form.addEventListener('submit', handleForm);
 function handleForm (e) {
 	e.preventDefault();
 	const interface = new Interface();
-	console.log(interface)
-	if (brand.value === "" || years.value === "" || membership.value === "") {
+	if (brand.value === "" || years.value === "" || membership=== "") {
 		interface.showError('!Debes Completar Todos los Campos!');
 	}
 	else {
 		console.log('datos correctos')
+		let membership = document.querySelector('input[name="tipo"]:checked').value;
+		console.log(membership)
+		const insurance = new Insurance(brand.value, years.value, membership);
+		const price = insurance.price(insurance)
 	}
 	
 }
@@ -43,4 +46,38 @@ Interface.prototype.showError = function (message) {
 	setTimeout(function() {
 		document.querySelector('.mensaje').remove()
 	}, 2000 )
+}
+
+function Insurance (brand, year, membership) {
+	this.brand = brand;
+	this.year = year;
+	this.membership = membership;
+}
+// We add price like a protoype
+Insurance.prototype.price = function (insurance) {
+	const base = 2000;
+	let price;
+	switch (insurance.brand){
+		case '1':
+		price = base * 1.15;
+		break;
+
+		case '2':
+		price =  base * 1.05;
+		break;
+
+		case '3':
+		price =  base * 1.35;
+		break;
+	}
+	const diference = new Date().getFullYear() - Number(insurance.year);
+	const discount = diference * 0.03;
+	price = price -(price* discount);
+	if (insurance.membership === 'basico') {
+		price = price + (price* 0.3);
+	}
+	if (insurance.membership === 'completo') {
+		price = price + (price* 0.5);
+	}
+	return price;
 }
