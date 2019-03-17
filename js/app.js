@@ -26,12 +26,15 @@ function handleForm (e) {
 	}
 	else {
 		console.log('datos correctos')
+		const result = document.querySelector('#resultado div');
+		if (result != null) {
+			result.remove();
+		}
 		let membership = document.querySelector('input[name="tipo"]:checked').value;
 		const insurance = new Insurance(brand.value, years.value, membership);
 		const price = insurance.price(insurance);
 		interface.showResult(insurance, price);
-	}
-	
+	}	
 }
 
 function Interface () {
@@ -47,7 +50,7 @@ Interface.prototype.showError = function (message) {
 		document.querySelector('.mensaje').remove()
 	}, 2000 )
 }
-
+// We add showResult like a prototype
 Interface.prototype.showResult = function (insurance, price) {
  const result = document.querySelector('#resultado');
  switch (insurance.brand) {
@@ -65,13 +68,17 @@ Interface.prototype.showResult = function (insurance, price) {
  }
  const div = document.createElement('div');
  div.innerHTML = `
-	<p>Tu Resumen:</p>
+	<p class="header">Tu Resumen:</p>
 	<p>Marca: ${insurance.brand}</p>
 	<p>Año: ${insurance.year}</p>
 	<p>Tipo: ${insurance.membership}</p>
 	<p>Total: $ ${price}</p>
  `
-result.appendChild(div)
+	document.querySelector('#cargando img').style='display:block';
+	setTimeout(function () {
+		document.querySelector('#cargando img').style='display:none';
+		result.appendChild(div)
+	} ,1500)
 }
 
 function Insurance (brand, year, membership) {

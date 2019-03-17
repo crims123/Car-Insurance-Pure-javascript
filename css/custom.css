@@ -66,6 +66,7 @@ header h1 {
 }
 #resultado div p {
     margin-bottom: 0;
+    font-weight: bold;
 }
 #resultado div p.header {
     background-color: #26C6DA;
