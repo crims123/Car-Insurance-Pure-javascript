@@ -51,23 +51,32 @@ class Interface {
 		const result = document.querySelector('#resultado');
 		switch (insurance.brand) {
 			case '1':
-			insurance.brand = 'Americano';
+			insurance.brand = 'American';
 			break;
 
 			case '2':
-			insurance.brand = 'Asiatico';
+			insurance.brand = 'Asian';
 			break;
 
 			case '3':
-			insurance.brand = 'Europeo';
+			insurance.brand = 'European';
+			break;
+		}
+		switch (insurance.membership) {
+			case 'basico':
+			insurance.membership = 'Basic';
+			break;
+
+			case 'completo':
+			insurance.membership = 'Full';
 			break;
 		}
 		const div = document.createElement('div');
 		div.innerHTML = `
-			<p class="header">Tu Resumen:</p>
-			<p>Marca: ${insurance.brand}</p>
-			<p>Año: ${insurance.year}</p>
-			<p>Tipo: ${insurance.membership}</p>
+			<p class="header">Resume:</p>
+			<p>Brand: ${insurance.brand}</p>
+			<p>Year: ${insurance.year}</p>
+			<p>Membership: ${insurance.membership}</p>
 			<p>Total: $ ${price}</p>
 		`
 		document.querySelector('#cargando img').style='display:block';
